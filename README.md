@@ -4,6 +4,23 @@
 
 **[docs/STEP-1-PLAN-AND-DEFINE.md](docs/STEP-1-PLAN-AND-DEFINE.md)** — deep plan: purpose, sections (Hero, Projects, Skills, **Architecture**, Blog, Contact), project showcase rubric, stack decisions (including Firebase vs current API), wireframes, and checklists.
 
+## Git & GitHub
+
+- **Global Git identity** (already applied on this machine): `user.name` **JOYE2146**, `user.email` **yosephbedasa85@email.com**.
+- This folder is a **local Git repo** on branch **`main`**, with a root **`.gitignore`** (ignores `node_modules/`, `dist/`, `.env`, etc.).
+- **Create the GitHub remote** (the empty repo must be created in the browser — signing in is required):
+  1. Open [github.com/new](https://github.com/new), choose a name (e.g. `portfolio`), leave “Add a README” **unchecked**, create the repository.
+  2. In this project directory run (replace `YOUR_USER` and `YOUR_REPO`):
+
+     ```bash
+     git remote add origin https://github.com/YOUR_USER/YOUR_REPO.git
+     git push -u origin main
+     ```
+
+  Or use SSH: `git@github.com:YOUR_USER/YOUR_REPO.git`.
+
+- Optional: install [GitHub CLI](https://cli.github.com/) (`gh`), run `gh auth login`, then `gh repo create portfolio --private --source=. --remote=origin --push`.
+
 ---
 
 Production-oriented developer portfolio: a **Next.js (App Router)** marketing site and **Express + PostgreSQL** API with an **admin CMS** (projects, blog, contact inbox), **JWT authentication**, validation, structured logging, and deployment paths for **Vercel** + **Render/Railway**.
