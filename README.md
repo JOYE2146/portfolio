@@ -6,20 +6,33 @@
 
 ## Git & GitHub
 
-- **Global Git identity** (already applied on this machine): `user.name` **JOYE2146**, `user.email` **yosephbedasa85@email.com**.
-- This folder is a **local Git repo** on branch **`main`**, with a root **`.gitignore`** (ignores `node_modules/`, `dist/`, `.env`, etc.).
-- **Create the GitHub remote** (the empty repo must be created in the browser — signing in is required):
-  1. Open [github.com/new](https://github.com/new), choose a name (e.g. `portfolio`), leave “Add a README” **unchecked**, create the repository.
-  2. In this project directory run (replace `YOUR_USER` and `YOUR_REPO`):
+- **Global Git identity**: `user.name` **JOYE2146**, `user.email` **yosephbedasa85@email.com**.
+- Local repo: branch **`main`**, root **`.gitignore`** (`node_modules/`, `dist/`, `.env`, etc.).
+- **Remote `origin`** is set to **`https://github.com/JOYE2146/portfolio.git`**. If your GitHub username is different, run:
 
-     ```bash
-     git remote add origin https://github.com/YOUR_USER/YOUR_REPO.git
-     git push -u origin main
-     ```
+  `git remote set-url origin https://github.com/YOUR_USERNAME/portfolio.git`
 
-  Or use SSH: `git@github.com:YOUR_USER/YOUR_REPO.git`.
+### Publish this code to GitHub (you must log in once)
 
-- Optional: install [GitHub CLI](https://cli.github.com/) (`gh`), run `gh auth login`, then `gh repo create portfolio --private --source=. --remote=origin --push`.
+1. Create an **empty** repository on GitHub: [github.com/new](https://github.com/new)  
+   - Owner: **JOYE2146** (or your account)  
+   - Repository name: **`portfolio`**  
+   - Do **not** add a README, `.gitignore`, or license (this project already has commits).
+
+2. From the `Portfolio` folder, push (Git Credential Manager or a browser window may open):
+
+   ```bash
+   git push -u origin main
+   ```
+
+3. **Alternative — GitHub CLI** (after `winget install GitHub.cli` and a new terminal):  
+   `gh auth login` then:
+
+   ```bash
+   gh repo create portfolio --public --source=. --remote=origin --push
+   ```
+
+   If `origin` already exists, use `gh repo create portfolio --public --push` after creating the repo on the website, then `git push -u origin main`.
 
 ---
 
