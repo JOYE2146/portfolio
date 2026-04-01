@@ -189,13 +189,23 @@ Use **Postman** or `curl` against these routes; send admin writes with `Authoriz
 | `NEXT_PUBLIC_SITE_URL` | Canonical site URL for OG + sitemap |
 | `NEXT_PUBLIC_SITE_NAME` | Display name (also edit `src/lib/constants.ts` for full copy) |
 
-## Deployment
+## Deployment & CI/CD (Step 11)
 
-1. **Database**: Create a managed Postgres instance; run `npm run migrate` and `npm run seed` once (CI job, local, or one-off shell on the host).
-2. **Backend (Render / Railway)**: Node service, `npm start`, set env vars; ensure `FRONTEND_URL` matches Vercel.
-3. **Frontend (Vercel)**: Import `frontend/`, set `NEXT_PUBLIC_*` vars, build command `npm run build`, output `.next`.
+The live app is the **Vite + React** project in **`frontend/`**.
 
-**Contact email notifications**: extend `contact.service.js` (e.g. Resend, SendGrid, Nodemailer) after storing the row; keep secrets in env.
+**Full guide:** **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)** — Vercel, Netlify, optional GitHub Actions deploy, production env vars, and **custom domains** (DNS).
+
+| Mechanism | What it does |
+|-----------|----------------|
+| **`.github/workflows/ci.yml`** | On every push/PR to `main`: `npm ci`, `lint`, and production `build` in `frontend/`. |
+| **`.github/workflows/deploy-vercel.yml`** | Optional: deploy with Vercel CLI when repository variable `ENABLE_VERCEL_ACTION` = `true` and secrets `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID` are set. |
+| **`.github/workflows/deploy-netlify.yml`** | Optional: deploy with Netlify CLI when `ENABLE_NETLIFY_ACTION` = `true` and `NETLIFY_AUTH_TOKEN`, `NETLIFY_SITE_ID` are set. |
+| **`frontend/vercel.json`** | SPA rewrite so client-side routes work on Vercel. |
+| **`netlify.toml`** | Build (`frontend`) + SPA fallback for Netlify. |
+
+**Easiest production path:** connect this GitHub repo in the [Vercel](https://vercel.com) or [Netlify](https://netlify.com) dashboard, set the app root to **`frontend`**, add `VITE_*` env vars from `frontend/.env.example`, and push to `main` — the host will build and deploy on every push without any Action.
+
+Older paragraphs below describe a **Next.js + Express** scaffold; ignore them if you are only using the Vite `frontend/` in this repo.
 
 ## Performance notes
 
@@ -208,7 +218,7 @@ Use **Postman** or `curl` against these routes; send admin writes with `Authoriz
 - E2E or API tests (e.g. `supertest`, Playwright).
 - Refresh tokens or httpOnly cookies for admin (with stricter CORS/cookie settings).
 - Rich markdown for blog (e.g. `react-markdown` with sanitization).
-- **GitHub Actions**: lint + `next build` on PR; optional API smoke tests (see Step 1 plan doc).
+- **GitHub Actions**: CI (lint + Vite build) is in `.github/workflows/ci.yml`; optional deploy workflows are documented in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
 ## License
 

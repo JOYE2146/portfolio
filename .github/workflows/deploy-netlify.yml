@@ -1,0 +1,42 @@
+# Optional Netlify CLI deploy (use instead of Vercel Action, or use Netlify’s native Git integration only).
+# Enable: Repository variable ENABLE_NETLIFY_ACTION = true
+# Secrets: NETLIFY_AUTH_TOKEN, NETLIFY_SITE_ID (Site settings → General → Site details).
+name: Deploy (Netlify)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: netlify-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ vars.ENABLE_NETLIFY_ACTION == 'true' }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install & build
+        working-directory: frontend
+        run: |
+          npm ci
+          npm run build
+
+      - name: Install Netlify CLI
+        run: npm install -g netlify-cli
+
+      - name: Deploy to Netlify (production)
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: netlify deploy --prod --dir=frontend/dist

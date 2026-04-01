@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npm run dev --prefix frontend",
     "dev:fresh": "npm run dev:fresh --prefix frontend",
-    "build": "npm run build --prefix frontend",
+    "build": "cd frontend && npm run build",
     "preview": "npm run preview --prefix frontend",
     "lint": "npm run lint --prefix frontend",
     "install:frontend": "npm install --prefix frontend"

@@ -1,0 +1,15 @@
+# Netlify: Site configuration when the repo is connected via the Netlify UI
+# (Build settings: base directory = frontend, or rely on paths below from repo root).
+[build]
+  base = "frontend"
+  command = "npm run build"
+  publish = "dist"
+
+# React Router / SPA — serve index.html for client routes
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[build.environment]
+  NODE_VERSION = "22"
