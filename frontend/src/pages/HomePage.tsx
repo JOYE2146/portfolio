@@ -1,31 +1,10 @@
 import { HeroSection } from "@/components/HeroSection";
 import { Container } from "@/components/layout/Container";
 import { ProjectGrid } from "@/components/projects/ProjectGrid";
+import { projectGridItems } from "@/data/projectGridSource";
 import reactLogo from "@/assets/react.svg";
 import viteLogo from "@/assets/vite.svg";
 import "@/App.css";
-
-const FEATURED_PROJECTS = [
-  {
-    title: "Portfolio site",
-    description:
-      "Personal marketing site with theme toggle, Firebase-ready setup, and a motion system tuned for accessibility.",
-    tags: ["React", "TypeScript", "Tailwind", "Vite"],
-    href: "https://github.com/JOYE2146/portfolio",
-  },
-  {
-    title: "API & admin pattern",
-    description:
-      "Structured Express API with validation, JWT admin routes, and a pattern you can extend for CMS-style content.",
-    tags: ["Node", "REST", "PostgreSQL"],
-  },
-  {
-    title: "Network automation",
-    description:
-      "Scripts and labs focused on reliable infrastructure, monitoring concepts, and clear operational documentation.",
-    tags: ["Networking", "Automation"],
-  },
-] as const;
 
 export function HomePage() {
   return (
@@ -35,7 +14,7 @@ export function HomePage() {
       <div className="ticks" aria-hidden />
 
       <section id="projects" aria-labelledby="projects-heading">
-        <ProjectGrid titleId="projects-heading" projects={[...FEATURED_PROJECTS]} />
+        <ProjectGrid titleId="projects-heading" projects={projectGridItems} />
         <div id="next-steps">
           <div id="docs">
             <svg className="icon" role="presentation" aria-hidden>

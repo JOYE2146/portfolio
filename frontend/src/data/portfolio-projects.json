@@ -1,0 +1,35 @@
+[
+  {
+    "title": "Portfolio Website",
+    "description": "Modern portfolio built with React and Firebase",
+    "tech": ["React", "Tailwind", "Firebase"],
+    "liveUrl": "https://your-site.com",
+    "repoUrl": "https://github.com/JOYE2146/portfolio.git",
+    "images": [],
+    "featured": true,
+    "complexity": "medium",
+    "createdAt": "2026-03-31T12:00:00.000Z"
+  },
+  {
+    "title": "API & admin pattern",
+    "description": "Structured Express API with validation, JWT admin routes, and a pattern you can extend for CMS-style content.",
+    "tech": ["Node", "REST", "PostgreSQL"],
+    "liveUrl": "",
+    "repoUrl": "",
+    "images": [],
+    "featured": false,
+    "complexity": "medium",
+    "createdAt": "2026-01-15T12:00:00.000Z"
+  },
+  {
+    "title": "Network automation",
+    "description": "Scripts and labs focused on reliable infrastructure, monitoring concepts, and clear operational documentation.",
+    "tech": ["Networking", "Automation"],
+    "liveUrl": "",
+    "repoUrl": "",
+    "images": [],
+    "featured": false,
+    "complexity": "low",
+    "createdAt": "2025-11-01T12:00:00.000Z"
+  }
+]
