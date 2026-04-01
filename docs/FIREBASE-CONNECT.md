@@ -62,3 +62,31 @@ npm run dev
 ```
 
 Restart the dev server after changing `.env`.
+
+## 6. Troubleshooting (Vite: `Failed to resolve import "@firebase/auth"`)
+
+The npm package `firebase` re-exports `firebase/auth` → `@firebase/auth`. If `@firebase/auth` (or other `@firebase/*` packages) is missing from `node_modules`—often after a partial install or sync issues (e.g. OneDrive)—Vite’s pre-bundle step fails.
+
+**Fix:** This repo lists `@firebase/app`, `@firebase/auth`, `@firebase/firestore`, and `@firebase/analytics` as **direct** `frontend` dependencies (versions aligned with `firebase@12.x`). Run:
+
+```bash
+cd frontend
+rm -rf node_modules/.vite
+npm install
+npm run dev
+```
+
+On Windows PowerShell: `Remove-Item -Recurse -Force node_modules\.vite`.
+
+### 504 `Outdated Optimize Dep` (Firestore / other deps)
+
+Vite pre-bundles deps under `node_modules/.vite/deps`. If the browser keeps an old `?v=` hash while the server regenerated files, you get **504 Outdated Optimize Dep**.
+
+This project sets **`optimizeDeps.force` in dev** so each `npm run dev` rebuilds that cache. If you still see 504:
+
+```bash
+cd frontend
+npm run dev:fresh
+```
+
+That deletes `node_modules/.vite` then starts Vite. Hard-refresh the browser (Ctrl+Shift+R).

@@ -34,6 +34,22 @@
 
    If `origin` already exists, use `gh repo create portfolio --public --push` after creating the repo on the website, then `git push -u origin main`.
 
+## Run from repo root
+
+Root **`package.json`** defines scripts so `npm run` works from `Portfolio/`:
+
+| Command | Action |
+|--------|--------|
+| `npm run` | List all scripts |
+| `npm run install:frontend` | Install dependencies inside `frontend/` |
+| `npm run dev` | Start Vite dev server (usually [http://localhost:5173](http://localhost:5173)) |
+| `npm run dev:fresh` | Clear Vite’s `.vite` cache then start dev (use if you see **504 Outdated Optimize Dep**) |
+| `npm run build` | Production build |
+| `npm run preview` | Preview production build |
+| `npm run lint` | ESLint |
+
+You can also use `cd frontend && npm run dev`.
+
 ---
 
 Production-oriented developer portfolio: a **Next.js (App Router)** marketing site and **Express + PostgreSQL** API with an **admin CMS** (projects, blog, contact inbox), **JWT authentication**, validation, structured logging, and deployment paths for **Vercel** + **Render/Railway**.

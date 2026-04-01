@@ -4,7 +4,24 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>frontend</title>
+    <meta name="color-scheme" content="light dark" />
+    <title>Portfolio</title>
+    <!-- FOUC: set .dark before first paint; must match hooks/theme.ts + THEME_STORAGE_KEY -->
+    <script>
+      (function () {
+        try {
+          var KEY = "portfolio-theme-preference";
+          var root = document.documentElement;
+          var stored = localStorage.getItem(KEY);
+          var dark;
+          if (stored === "light") dark = false;
+          else if (stored === "dark") dark = true;
+          else
+            dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          root.classList.toggle("dark", dark);
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
