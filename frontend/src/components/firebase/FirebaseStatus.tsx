@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
-import { getFirebaseApp, initFirebaseAnalytics } from "@/lib/firebase";
+import { getFirebaseApp, initFirebaseAnalytics, isFirebaseConfigured } from "@/lib/firebase";
 
-type Status = "loading" | "ok" | "error";
+type Status = "loading" | "ok" | "error" | "disabled";
 
 export function FirebaseStatus() {
-  const [status, setStatus] = useState<Status>("loading");
+  const configured = isFirebaseConfigured();
+  const [status, setStatus] = useState<Status>(configured ? "loading" : "disabled");
   const [analytics, setAnalytics] = useState<"on" | "off" | "unsupported">("off");
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(
+    configured ? "" : "Optional — add VITE_FIREBASE_* to frontend/.env when you want Firestore."
+  );
 
   useEffect(() => {
+    if (!configured) return;
+
     let cancelled = false;
     (async () => {
       try {
@@ -27,7 +32,15 @@ export function FirebaseStatus() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [configured]);
+
+  if (status === "disabled") {
+    return (
+      <p className="firebase-status firebase-status--disabled" role="status">
+        {message}
+      </p>
+    );
+  }
 
   if (status === "loading") {
     return (

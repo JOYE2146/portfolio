@@ -174,6 +174,10 @@ p {
   color: var(--token-fg-muted);
 }
 
+.firebase-status--disabled {
+  color: var(--token-fg-muted);
+}
+
 .firebase-status--error {
   color: #dc2626;
 }
@@ -187,6 +191,44 @@ section[id] {
   scroll-margin-top: calc(var(--space-header-h) + 0.75rem);
 }
 
+/* Notched devices — keep content inside safe area without shifting centered layouts heavily */
+@supports (padding: max(0px)) {
+  #main-content {
+    padding-inline: max(0px, env(safe-area-inset-left, 0px)) max(0px, env(safe-area-inset-right, 0px));
+    padding-bottom: max(0px, env(safe-area-inset-bottom, 0px));
+  }
+}
+
 .dark #social .button-icon {
   filter: invert(1) brightness(2);
+}
+
+/* Résumé / clean printouts — hide chrome */
+@media print {
+  .firebase-strip,
+  body > #root > header,
+  body > #root > footer,
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: #fff !important;
+    color: #111 !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  #root {
+    min-height: auto !important;
+  }
+
+  #main-content {
+    display: block !important;
+  }
+
+  .resume-doc a {
+    color: #111 !important;
+    text-decoration: underline;
+  }
 }

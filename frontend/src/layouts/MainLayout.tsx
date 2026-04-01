@@ -2,6 +2,7 @@ import { FirebaseStatus } from "@/components/firebase/FirebaseStatus";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { SkipLink } from "@/components/layout/SkipLink";
+import { RouteAnalytics } from "@/components/seo";
 import { Outlet } from "react-router-dom";
 
 /**
@@ -11,6 +12,7 @@ import { Outlet } from "react-router-dom";
 export function MainLayout() {
   return (
     <>
+      <RouteAnalytics />
       <SkipLink />
       <div className="firebase-strip">
         <FirebaseStatus />

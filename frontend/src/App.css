@@ -70,46 +70,28 @@
   }
 }
 
+/* #next-steps layout lives in HomePage (Tailwind + Container); keep light column divider */
 #next-steps {
-  display: flex;
-  border-top: 1px solid var(--border);
   text-align: left;
-
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
 }
 
 #docs {
   border-right: 1px solid var(--border);
+  padding-right: 1.5rem;
 
-  @media (max-width: 1024px) {
+  @media (max-width: 639px) {
     border-right: none;
     border-bottom: 1px solid var(--border);
+    padding-right: 0;
+    padding-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
   }
 }
 
-#next-steps ul {
+#next-steps #docs ul {
   list-style: none;
   padding: 0;
-  display: flex;
-  gap: 8px;
-  margin: 32px 0 0;
+  margin: 1rem 0 0;
 
   .logo {
     height: 18px;

@@ -8,28 +8,32 @@
     "images": [],
     "featured": true,
     "complexity": "medium",
-    "createdAt": "2026-03-31T12:00:00.000Z"
-  },
-  {
-    "title": "API & admin pattern",
-    "description": "Structured Express API with validation, JWT admin routes, and a pattern you can extend for CMS-style content.",
-    "tech": ["Node", "REST", "PostgreSQL"],
-    "liveUrl": "",
-    "repoUrl": "",
-    "images": [],
-    "featured": false,
-    "complexity": "medium",
-    "createdAt": "2026-01-15T12:00:00.000Z"
-  },
-  {
-    "title": "Network automation",
-    "description": "Scripts and labs focused on reliable infrastructure, monitoring concepts, and clear operational documentation.",
-    "tech": ["Networking", "Automation"],
-    "liveUrl": "",
-    "repoUrl": "",
-    "images": [],
-    "featured": false,
-    "complexity": "low",
-    "createdAt": "2025-11-01T12:00:00.000Z"
+    "createdAt": "2026-03-31T12:00:00.000Z",
+    "architectureCaseStudy": {
+      "diagramBasic": "flowchart LR\n  subgraph Client[Browser]\n    SPA[Vite + React SPA]\n  end\n  subgraph Data\n    FB[(Firestore catalog)]\n    JSON[Static JSON fallback]\n  end\n  SPA --> FB\n  SPA --> JSON",
+      "diagramAdvanced": "sequenceDiagram\n  autonumber\n  actor Visitor\n  participant CDN as Static CDN\n  participant SPA as Vite React SPA\n  participant SDK as Firestore client\n  participant Rules as Security rules\n  participant DB as Firestore DB\n  Visitor->>CDN: Request app shell\n  CDN-->>Visitor: Cached static bundles\n  Visitor->>SPA: Use portfolio UI\n  alt Firebase configured\n    SPA->>SDK: Query subscribe projects\n    SDK->>Rules: Authorize read write\n    Rules->>DB: Allowed operations only\n    DB-->>SDK: Project documents\n    SDK-->>SPA: Catalog data\n  else No Firebase dev fallback\n    SPA->>SPA: Import static JSON catalog\n  end\n  SPA-->>Visitor: Render grid and filters",
+      "stackRationaleBasic": "Firestore fits a read-mostly project catalog with optional live updates and no dedicated backend VM to operate. A checked-in JSON fallback keeps the site usable when Firebase env vars are missing—important for contributors and CI.",
+      "stackRationaleAdvanced": "A relational DB would add connection pooling, migrations, and an API layer for the same read patterns. Here, document reads map naturally to project rows, rules enforce auth on writes, and the SPA stays serverless. SQL would shine for complex reporting or cross-table joins we do not need yet.",
+      "scalabilityBasic": "Traffic scales with static assets on the CDN; Firestore handles concurrent readers on the catalog collection. Writes are rare (portfolio updates), so hot paths stay read-optimized.",
+      "scalabilityAdvanced": "If catalog growth or traffic spikes: add composite indexes for filtered queries, paginate list endpoints client-side, and consider a tiny Cloud Function only if we need server-side aggregation. For global latency, rules + regional Firestore and immutable hashed asset URLs keep TTFB predictable.",
+      "performanceDecisions": [
+        "Code-split Mermaid and heavy routes so the initial bundle stays lean for LCP.",
+        "Prefer transform/opacity animations over layout thrash; honor prefers-reduced-motion.",
+        "Firestore reads batched where possible; static JSON path avoids network entirely in dev.",
+        "Security rules as the authoritative gate instead of duplicating checks only in UI."
+      ],
+      "cicdBasic": "Push triggers GitHub Actions to lint and build; static files deploy to your host (Pages, Vercel, or S3+CDN). No long-running server in the pipeline.",
+      "cicdAdvanced": "Branch protection + required checks before merge; preview deployments per PR when the host supports it. Secrets for Firebase live in CI only for production deploys; local dev can skip Firebase via the JSON catalog."
+    },
+    "challenges": [
+      "Keeping Firebase optional so local dev works without .env",
+      "Aligning motion with prefers-reduced-motion",
+      "Filtering and sorting a mixed Firestore + static catalog"
+    ],
+    "performanceMetrics": [
+      { "label": "JS bundle (gzip, approx.)", "value": "~233 KB" },
+      { "label": "Rendering", "value": "Client-side SPA" },
+      { "label": "Lighthouse target", "value": "90+ perf" }
+    ]
   }
 ]

@@ -7,3 +7,5 @@ export {
   type ThemePreference,
 } from "./theme";
 export { useReducedMotion } from "./useReducedMotion";
+export { useFirestoreProjects } from "./useFirestoreProjects";
+export { useProjectDetail } from "./useProjectDetail";

@@ -1,5 +1,6 @@
 import { Container } from "@/components/layout/Container";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import { CONTACT_PROFILE } from "@/data/contact-profile";
 import { cn } from "@/utils/cn";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
@@ -15,7 +16,11 @@ const navClass = ({ isActive }: { isActive: boolean }) =>
 
 const mainNav = [
   { to: "/", label: "Home", end: true },
+  { to: "/blog", label: "Blog" },
+  { to: "/resume", label: "Résumé" },
   { hash: "about", label: "About" },
+  { hash: "skills", label: "Skills" },
+  { hash: "architecture", label: "Architecture" },
   { hash: "projects", label: "Projects" },
   { hash: "contact", label: "Contact" },
 ] as const;
@@ -88,7 +93,8 @@ export function Header() {
           to="/"
           className="text-base font-semibold tracking-tight text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
         >
-          Portfolio
+          <span className="sm:hidden">{CONTACT_PROFILE.shortName}</span>
+          <span className="hidden sm:inline">{CONTACT_PROFILE.fullName}</span>
         </Link>
 
         <nav
@@ -97,7 +103,12 @@ export function Header() {
         >
           {mainNav.map((item) =>
             "to" in item ? (
-              <NavLink key={item.to} to={item.to} end={item.end} className={navClass}>
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={"end" in item && item.end}
+                className={navClass}
+              >
                 {item.label}
               </NavLink>
             ) : (
@@ -153,7 +164,7 @@ export function Header() {
                 <NavLink
                   key={item.to}
                   to={item.to}
-                  end={item.end}
+                  end={"end" in item && item.end}
                   className={(p) => cn(navClass(p), "w-full")}
                   onClick={() => setMobileOpen(false)}
                 >

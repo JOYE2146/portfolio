@@ -23,10 +23,13 @@ export function mapPortfolioProjectToCard(
 ): Omit<ProjectCardProps, "variants"> {
   const repo = normalizeRepoUrl(p.repoUrl);
 
+  const imageUrls = (p.images ?? []).filter((u) => /^https?:\/\//i.test(String(u).trim()));
+
   return {
     title: p.title,
     description: p.description,
     tags: p.tech,
+    images: imageUrls,
     href: repo || undefined,
     featured: p.featured,
     liveUrl: showLiveLink(p.liveUrl) ? p.liveUrl.trim() : undefined,

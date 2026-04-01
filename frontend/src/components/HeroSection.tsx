@@ -240,6 +240,7 @@ export function HeroSection() {
                       src={portraitImg}
                       width={440}
                       height={550}
+                      sizes="(max-width: 640px) 300px, (max-width: 1024px) 340px, 440px"
                       alt="Portrait of Yoseph Bedasa, Web Developer and Network Engineer."
                       className="aspect-[4/5] h-auto w-[min(100%,300px)] object-cover sm:w-[min(100%,340px)] lg:w-full lg:max-w-none"
                       decoding="async"
